@@ -41,9 +41,12 @@ class MultiDictionary:
                     found = True
             if (found):
                 richW.corretta = True
+            else:
+                richW.corretta = False
 
             parole.append(richW)
-
+            print(richW.__str__())
+            print(richW.corretta)
         return parole
 
     def searchWordLinear(self, words, language):
@@ -68,6 +71,8 @@ class MultiDictionary:
                         found = True
             if (found):
                 richW.corretta = True
+            else:
+                richW.corretta = False
 
             parole.append(richW)
 
@@ -92,6 +97,8 @@ class MultiDictionary:
                 found = dichotomicSearch(word, currentDic)
             if (found):
                 richW.corretta = True
+            else:
+                richW.corretta = False
 
             parole.append(richW)
 

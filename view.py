@@ -28,8 +28,39 @@ class View(object):
 
         # Add your stuff here
 
-        self.page.add([])
+        #self.page.add([])
 
+        # 1) Creare un menu a tendina per la lingua. -- IN
+        self.ddLanguage = ft.Dropdown(label="Seleziona Lingua",
+                                      options=[ft.dropdown.Option("Italiano"),
+                                               ft.dropdown.Option("Inglese"),
+                                               ft.dropdown.Option("Spagnolo")],
+                                      on_change= self.__controller.handleLanguageSelection)
+
+
+        row1 = ft.Row(controls = [self.ddLanguage], alignment=ft.MainAxisAlignment.CENTER)
+
+        self.txtOut = ft.ListView(expand=1, spacing=10) #la lista di cose da dare in output
+
+
+        # 2) Creare un menu a tendina per la selezione di ricerca. -- IN
+        self.ddSearchSelection = ft.Dropdown(label="Seleziona Ricerca",
+                                      options=[ft.dropdown.Option("Default"),
+                                               ft.dropdown.Option("Linear"),
+                                               ft.dropdown.Option("Dicotomica")],
+                                      on_change= self.__controller.handleSearchSelection
+                                             )
+
+
+        #3) creo spazio di testo per inserire il testo da cercare
+        self.txtIn = ft.TextField(label = "Scrivi il tuo testo", width = 420)
+
+        #4) creo il bottone che avvia la funzione di correzione
+        self.btnSpellCheck = ft.ElevatedButton(text = "Spell check", on_click =  self.__controller.handleSpellCheck)
+
+        row2 = ft.Row(controls=[self.ddSearchSelection, self.txtIn, self.btnSpellCheck], alignment=ft.MainAxisAlignment.CENTER)
+
+        self.page.add(row1, row2, self.txtOut)
         self.page.update()
 
     def update(self):
@@ -51,3 +82,5 @@ class View(object):
         #     ft.colors.GREY_900 if self.page.theme_mode == ft.ThemeMode.DARK else ft.colors.GREY_300
         # )
         self.page.update()
+
+

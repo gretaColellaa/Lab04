@@ -11,6 +11,7 @@ class SpellChecker:
     def handleSentence(self, txtIn, language, modality):
         txtIn = replaceChars(txtIn.lower())
 
+
         words = txtIn.split()
         paroleErrate = " - "
 
@@ -21,6 +22,7 @@ class SpellChecker:
                 for parola in parole:
                     if not parola.corretta:
                         paroleErrate = paroleErrate + str(parola) + " - "
+                        print(paroleErrate)
                 t2 = time.time()
                 return paroleErrate, t2 - t1
 
@@ -45,6 +47,46 @@ class SpellChecker:
                 return None
 
 
+    def handleLanguageSelection(self, e):
+        print("handle language selection called")
+        self._view.txtOut.controls.append(ft.Text(value = "Lingua scelta correttamente: " + self._view.ddLanguage.value))
+        self._view.update()
+
+    def handleSearchSelection(self, e):
+        print("handle research selection called")
+        self._view.txtOut.controls.append(ft.Text(value="Metodo di ricerca scelto correttamente: " + self._view.ddSearchSelection.value))
+        self._view.update()
+
+    def handleSpellCheck(self, e):
+        print("handle SpellCheck called")
+
+        language = self._view.ddLanguage.value
+        txtInput = self._view.txtIn.value
+        modality = self._view.ddSearchSelection.value
+
+
+        if language  == "" :
+            self._view.txtOut.controls.clear()
+            self._view.txtOut.controls.append(ft.Text(value="Seleziona lingua !", color = "red"))
+            return
+        if modality == "":
+            self._view.txtOut.controls.clear()
+            self._view.txtOut.controls.append(ft.Text(value="Seleziona modalità !", color="red"))
+            return
+        if txtInput == "":
+            self._view.txtOut.controls.clear()
+            self._view.txtOut.controls.append(ft.Text(value="Inserire testo !", color="red"))
+            return
+
+        parole, tempo = self.handleSentence(txtInput, language.lower(), modality)
+
+        self._view.txtOut.controls.clear() #pulisco la schermata
+        self._view.txtOut.controls.append(ft.Text("Frase inserita: " + txtInput))
+        self._view.txtOut.controls.append(ft.Text("Parole errate: " + parole))
+        self._view.txtOut.controls.append(ft.Text(f"Tempo trascorso :   {tempo}"))
+
+        self._view.update()
+
     def printMenu(self):
         print("______________________________\n" +
               "      SpellChecker 101\n"+
@@ -62,3 +104,5 @@ def replaceChars(text):
     for c in chars:
         text = text.replace(c, "")
     return text
+
+
